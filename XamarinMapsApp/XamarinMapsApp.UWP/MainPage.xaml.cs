@@ -21,6 +21,8 @@ namespace XamarinMapsApp.UWP
         {
             this.InitializeComponent();
 
+            Xamarin.FormsMaps.Init("2GF3VlGUdsdJAApXXm3U ~ WnaVXsx7Hg1_ZfTdHp-Xzw ~ AieXCxAWkduuqn19HPce_X1ALis5_3I0HduIKxpn0bZlFicTFaiD0fdaM72u-Won");
+
             LoadApplication(new XamarinMapsApp.App());
         }
     }
