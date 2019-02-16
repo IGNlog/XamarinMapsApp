@@ -30,9 +30,9 @@ namespace XamarinForms.ViewModels
 
         private string apiUrlForVenues = $"";
 
-        private FoursquareVenues _foursquareVenues;
+        private FoursquareVenuesNew _foursquareVenues;
 
-        public FoursquareVenues FoursquareVenues
+        public FoursquareVenuesNew FoursquareVenues
         {
             get { return _foursquareVenues; }
             set
@@ -44,10 +44,18 @@ namespace XamarinForms.ViewModels
 
         public FoursquareViewModel()
         {
+            //GetGeoPos();
             InitDataAsync();
         }
 
-        public async Task InitDataAsync()
+        public FoursquareViewModel(Position position)
+        {
+            Lon = position.Longitude.ToString();
+            Lat = position.Latitude.ToString();
+            //InitDataAsync();
+        }
+
+        public async Task GetGeoPos()
         {
             try
             {
@@ -60,7 +68,17 @@ namespace XamarinForms.ViewModels
                     return;
                 }
 
-                var position = await locator.GetPositionAsync(TimeSpan.FromMilliseconds(10000), null, false);
+                var position = await locator.GetPositionAsync(TimeSpan.FromMilliseconds(30000), null, false);
+                //var locator = CrossGeolocator.Current;
+                //locator.DesiredAccuracy = 1000;
+
+                //if (!locator.IsGeolocationAvailable || !locator.IsGeolocationEnabled)
+                //{
+                //    //not available or enabled
+                //    return;
+                //}
+
+                //var position = await locator.GetPositionAsync(TimeSpan.FromMilliseconds(10000), null, false);
 
 
                 //Position position = null;
@@ -92,20 +110,59 @@ namespace XamarinForms.ViewModels
                 //position = await locator.GetPositionAsync(TimeSpan.FromMilliseconds(10000));
                 Lon = Math.Round(position.Longitude, 6).ToString();
                 Lat = Math.Round(position.Latitude, 6).ToString();
+                Lon = Lon.Replace(',', '.').Normalize();
+                Lat = Lat.Replace(',', '.').Normalize();
             }
             catch (Exception ex)
             {
                 // Unable to get location
+                Lat = "55.792393";
+                Lon = "49.122390";
             }
+        }
 
-            apiUrlForVenues = $"https://api.foursquare.com/v2/venues/explore?ll={Lon},{Lat}&client_id={ClientId}&client_secret={ClientSecret}&v={v}&radius=3000&venuePhotos=1";
+        public async Task InitDataAsync()
+        {
+            //try
+            //{
+            //    var locator = CrossGeolocator.Current;
+            //    locator.DesiredAccuracy = 1000;
+
+            //    if (!locator.IsGeolocationAvailable || !locator.IsGeolocationEnabled)
+            //    {
+            //        //not available or enabled
+            //        return;
+            //    }
+
+            //    var position = await locator.GetPositionAsync(TimeSpan.FromMilliseconds(30000), null, false);
+            //    Lon = Math.Round(position.Longitude, 6).ToString();
+            //    Lat = Math.Round(position.Latitude, 6).ToString();
+            //    Lon = Lon.Replace(',', '.').Normalize();
+            //    Lat = Lat.Replace(',', '.').Normalize();
+            //}
+            //catch (Exception ex)
+            //{
+            //    // Unable to get location
+            //    Lat = "55.792393";
+            //    Lon = "49.122390";
+            //}
+
+            apiUrlForVenues = $"https://api.foursquare.com/v2/venues/explore?ll={Lat},{Lon}&client_id={ClientId}&client_secret={ClientSecret}&v={v}&radius=3000&venuePhotos=1";
             //apiUrlForVenues = $"https://api.foursquare.com/v2/venues/explore?ll=49.166126,55.789912&client_id={ClientId}&client_secret={ClientSecret}&v={v}&radius=3000&venuePhotos=1";
             var httpClient = new HttpClient();
-
-
-            var json = await httpClient.GetStringAsync(apiUrlForVenues);
-            
-            FoursquareVenues = JsonConvert.DeserializeObject<FoursquareVenues>(json);
+            //apiUrlForVenues = $"https://api.foursquare.com/v2/venues/explore?ll=55.792445,49.122387&client_id={ClientId}&client_secret={ClientSecret}&v={v}&radius=3000&venuePhotos=1";
+            string json;
+            try
+            {
+                json = await httpClient.GetStringAsync(apiUrlForVenues); //FoursquareVenues = JsonConvert.DeserializeObject<FoursquareVenuesNew>(json);
+                int i = 0;
+                FoursquareVenues = JsonConvert.DeserializeObject<FoursquareVenuesNew>(json, new JsonSerializerSettings() {DefaultValueHandling=DefaultValueHandling.Ignore});
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            //var json = await httpClient.GetStringAsync(apiUrlForVenues);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

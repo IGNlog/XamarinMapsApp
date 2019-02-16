@@ -3,6 +3,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using XamarinForms.ViewModels;
 using XamarinForms.Views;
+using XamarinMapsApp.Services;
 using XamarinMapsApp.Views;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
@@ -10,38 +11,20 @@ namespace XamarinMapsApp
 {
     public partial class App : Application
     {
-        public App()
+        public const string DATABASE_NAME = "favorite_place.db";
+        public static FavoritePlaceRepository database;
+        public static FavoritePlaceRepository Database
         {
-            InitializeComponent();
-
-            MainPage = new ContentPage
+            get
             {
-                Content = new ActivityIndicator()
+                if (database == null)
                 {
-                    IsRunning = true,
-                    IsEnabled = true
-
+                    database = new FavoritePlaceRepository(DATABASE_NAME);
                 }
-            };
+                return database;
+            }
         }
 
-        protected override async void OnStart()
-        {
-            var foursquareViewModel = new FoursquareViewModel();
-
-            await foursquareViewModel.InitDataAsync();
-
-            MainPage = new TabbedPage
-            {
-                Children =
-                {
-                    new MainPage(foursquareViewModel),
-                    new FoursquareViewPage(foursquareViewModel)
-                }
-
-            };
-            // Handle when your app starts
-        }
 
         //public App()
         //{
@@ -60,11 +43,36 @@ namespace XamarinMapsApp
 
         //protected override async void OnStart()
         //{
+        //    var foursquareViewModel = new FoursquareViewModel();
 
-        //    MainPage = new StartPage();
-            
+        //    await foursquareViewModel.InitDataAsync();
+
+        //    MainPage = new TabbedPage
+        //    {
+        //        Children =
+        //        {
+        //            new MapPage(foursquareViewModel),
+        //            new FoursquareViewPage(foursquareViewModel)
+        //        }
+
+        //    };
         //    // Handle when your app starts
         //}
+
+        public App()
+        {
+            InitializeComponent();
+
+            MainPage = new NavigationPage(new StartPage());
+        }
+
+        protected override async void OnStart()
+        {
+
+            //MapPage = new StartPage();
+
+            // Handle when your app starts
+        }
 
 
         protected override void OnSleep()

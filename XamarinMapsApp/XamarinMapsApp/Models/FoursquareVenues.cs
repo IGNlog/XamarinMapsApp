@@ -350,7 +350,7 @@ namespace XamarinForms.Models
         public List<Group> Groups { get; set; }
     }
 
-    public class FoursquareVenues
+    public class FoursquareVenuesNew
     {
         public Meta Meta { get; set; }
         public List<Notification> Notifications { get; set; }

@@ -8,6 +8,7 @@ using Android.Widget;
 using Android.OS;
 using Android;
 using Plugin.Permissions;
+using Android.Support.V4.Content;
 
 namespace XamarinMapsApp.Droid
 {
@@ -24,15 +25,15 @@ namespace XamarinMapsApp.Droid
             LoadApplication(new App());
         }
 
-        //protected override void OnStart()
-        //{
-        //    base.OnStart();
-        //    if (CheckSelfPermission(Manifest.Permission.AccessCoarseLocation) != (int)Permission.Granted)
-        //    {
-        //        RequestPermissions(new string[] { Manifest.Permission.AccessCoarseLocation, Manifest.Permission.AccessFineLocation }, 0);
-        //    }
+        protected override void OnStart()
+        {
+            base.OnStart();
+            if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.AccessCoarseLocation) != (int)Permission.Granted)
+            {
+                RequestPermissions(new string[] { Manifest.Permission.AccessCoarseLocation, Manifest.Permission.AccessFineLocation }, 0);
+            }
 
-        //}
+        }
 
         //public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Android.Content.PM.Permission[] grantResults)
         //{

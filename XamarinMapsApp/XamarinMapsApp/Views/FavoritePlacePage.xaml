@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="XamarinMapsApp.Views.FavoritePlacePage" Title="Info about place">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Name place"/>
+            <Entry Text="{Binding NamePlace}" />
+            <Label Text="Address" />
+            <Entry Text="{Binding FormattedAddress}" />
+            <Label Text="Discription" />
+            <Entry Text="{Binding Discription}" />
+            <!--прикрутить карту, чтобы выбрать местоположение места-->
+            <!--прикрутить фотку места сделанную пользователем-->
+            
+            <StackLayout Orientation="Horizontal">
+                <Button Text="Save" Clicked="SaveFavoritePlace" />
+                <Button Text="Delete" Clicked="DeleteFavoritePlace" />
+                <Button Text="Cancel" Clicked="Cancel" />
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

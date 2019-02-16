@@ -8,9 +8,10 @@ using Xamarin.Forms;
 using Xamarin.Forms.Maps;
 using XamarinForms.ViewModels;
 
+
 namespace XamarinMapsApp
 {
-    public partial class MainPage : ContentPage
+    public partial class MapPage : ContentPage
     {
 
         private FoursquareViewModel _foursquareViewModel;
@@ -18,16 +19,26 @@ namespace XamarinMapsApp
         private double Lon;
         private double Lat;
 
-        public MainPage()
+        public MapPage()
         {
             InitializeComponent();
         }
 
-        public MainPage(FoursquareViewModel foursquareViewModel)
+        public MapPage(FoursquareViewModel foursquareViewModel)
         {
             InitializeComponent();
 
             _foursquareViewModel = foursquareViewModel;
+
+            Lon = Convert.ToDouble(_foursquareViewModel.Lon);
+            Lat = Convert.ToDouble(_foursquareViewModel.Lat);
+        }
+
+        public MapPage(Plugin.Geolocator.Abstractions.Position position)
+        {
+            InitializeComponent();
+
+            _foursquareViewModel = new FoursquareViewModel(position);
 
             Lon = Convert.ToDouble(_foursquareViewModel.Lon);
             Lat = Convert.ToDouble(_foursquareViewModel.Lat);
@@ -64,7 +75,7 @@ namespace XamarinMapsApp
 
             MainMap.MoveToRegion(
                MapSpan.FromCenterAndRadius(
-                   new Position(Lon, Lat),
+                   new Position(Lat, Lon),
                Distance.FromMeters(2000)));
 
             var items = _foursquareViewModel.FoursquareVenues.Response.Groups[0].Items;
