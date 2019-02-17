@@ -9,7 +9,13 @@
 	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 	<uses-permission android:name="android.permission.LOCATION_HARDWARE" />
+	<!--<uses-permission android:name="android.permission.camera" />
+	<uses-permission android:name="android.permission.write_external_storage" />
+	<uses-permission android:name="android.permission.read_external_storage" />-->
 	<application android:label="XamarinMapsApp.Android" android:icon="@mipmap/launcher_foreground">
-		<meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyCGj5BH9-3_cQgXQqertzSn2Q2nD95BsbA"/>
+    <!--<provider android:name="android.support.v4.content.FileProvider" android:authorities="com.companyname.XamarinMapsApp0.fileprovider" android:exported="false" android:grantUriPermissions="true">
+      <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/file_paths"></meta-data>
+    </provider>-->
+    <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyCGj5BH9-3_cQgXQqertzSn2Q2nD95BsbA" />
 	</application>
 </manifest>

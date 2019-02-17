@@ -12,7 +12,15 @@
             <Entry Text="{Binding Discription}" />
             <!--прикрутить карту, чтобы выбрать местоположение места-->
             <!--прикрутить фотку места сделанную пользователем-->
-            
+            <StackLayout HorizontalOptions="Center">
+                <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+                    <Button x:Name="takePhotoBtn" Text="Take Photo" Clicked="takePhotoBtn_Clicked"/>
+                    <Button x:Name="getPhotoBtn" Text="Get Photo" Clicked="getPhotoBtn_Clicked"/>
+                </StackLayout>
+                <!--<Image x:Name="img" Source="{Binding ImageSource.FromFile(file.Path)}"/>-->
+                <!--<Image x:Name="img" Source="{Binding ImageSourcePhoto}"/>-->
+                <Image x:Name="img"/>
+            </StackLayout>
             <StackLayout Orientation="Horizontal">
                 <Button Text="Save" Clicked="SaveFavoritePlace" />
                 <Button Text="Delete" Clicked="DeleteFavoritePlace" />
