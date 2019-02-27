@@ -23,16 +23,38 @@ namespace XamarinMapsApp.Droid
             base.OnCreate(savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             LoadApplication(new App());
+            RequestPermissions(new string[] { Manifest.Permission.AccessCoarseLocation,
+                    Manifest.Permission.AccessFineLocation, Manifest.Permission.Camera,
+                    Manifest.Permission.ReadExternalStorage, Manifest.Permission.WriteExternalStorage}, 0);
+
         }
 
         protected override void OnStart()
         {
             base.OnStart();
-            if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.AccessCoarseLocation) != (int)Permission.Granted)
+            if ((ContextCompat.CheckSelfPermission(this, Manifest.Permission.AccessCoarseLocation) != (int)Permission.Granted)||
+                (ContextCompat.CheckSelfPermission(this, Manifest.Permission.Camera) != (int)Permission.Granted)||
+                (ContextCompat.CheckSelfPermission(this, Manifest.Permission.ReadExternalStorage) != (int)Permission.Granted) ||
+                (ContextCompat.CheckSelfPermission(this, Manifest.Permission.WriteExternalStorage) != (int)Permission.Granted))
             {
-                RequestPermissions(new string[] { Manifest.Permission.AccessCoarseLocation, Manifest.Permission.AccessFineLocation }, 0);
+                RequestPermissions(new string[] { Manifest.Permission.AccessCoarseLocation,
+                    Manifest.Permission.AccessFineLocation, Manifest.Permission.Camera,
+                    Manifest.Permission.ReadExternalStorage, Manifest.Permission.WriteExternalStorage}, 0);
+                //RequestPermissions(new string[] { Manifest.Permission.Camera, }, 0);
+                //RequestPermissions(new string[] { Manifest.Permission.ReadExternalStorage, Manifest.Permission.WriteExternalStorage }, 0);
             }
 
+            //if ((ContextCompat.CheckSelfPermission(this, Manifest.Permission.Camera) != (int)Permission.Granted))
+            //{
+            //    RequestPermissions(new string[] { Manifest.Permission.Camera, }, 0);
+            //    RequestPermissions(new string[] { Manifest.Permission.ReadExternalStorage, Manifest.Permission.WriteExternalStorage }, 0);
+            //}
+
+            //if ((ContextCompat.CheckSelfPermission(this, Manifest.Permission.ReadExternalStorage) != (int)Permission.Granted)||
+            //    (ContextCompat.CheckSelfPermission(this, Manifest.Permission.WriteExternalStorage) != (int)Permission.Granted))
+            //{
+            //    RequestPermissions(new string[] { Manifest.Permission.ReadExternalStorage, Manifest.Permission.WriteExternalStorage }, 0);
+            //}
         }
 
         //public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Android.Content.PM.Permission[] grantResults)

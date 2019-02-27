@@ -12,6 +12,7 @@
             <Entry Text="{Binding Discription}" />
             <!--прикрутить карту, чтобы выбрать местоположение места-->
             <!--прикрутить фотку места сделанную пользователем-->
+            <!--TOBI PEZDA TI ETO ZNAESH -->
             <StackLayout HorizontalOptions="Center">
                 <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
                     <Button x:Name="takePhotoBtn" Text="Take Photo" Clicked="takePhotoBtn_Clicked"/>
